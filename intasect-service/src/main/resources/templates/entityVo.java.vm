@@ -1,6 +1,6 @@
 package ${package.Entity};
 
-import com.intasect.service.common.base.BaseEntity;
+import com.intasect.service.common.entity.PageCondition;
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
@@ -16,58 +16,10 @@ import lombok.Data;
  * @since ${date}
  */
 @Data
-public class ${entity}Vo extends BaseEntity {
+public class ${entity}Vo extends PageCondition {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
     private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
-}
-
-
-
-
-package com.youlai.admin.pojo.entity;
-
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.youlai.common.base.BaseEntity;
-import lombok.Data;
-
-import java.util.List;
-
-
-@Data
-public class SysUser extends BaseEntity {
-
-    @TableId
-    private Long id;
-
-    private String username;
-
-    private String nickname;
-
-    private String mobile;
-
-    private Integer gender;
-
-    private String avatar;
-
-    private String password;
-
-    private Integer status;
-
-    private Long deptId;
-
-    private Integer deleted;
-
-    @TableField(exist = false)
-    private String deptName;
-
-    @TableField(exist = false)
-    private List<Long> roleIds;
-
-    @TableField(exist = false)
-    private String roleNames;
-
 }

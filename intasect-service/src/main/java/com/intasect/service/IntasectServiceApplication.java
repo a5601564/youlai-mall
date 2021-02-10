@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.intasect.service.*.mapper")
-public class SpringbootMybatisPlusApplication {
+public class IntasectServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootMybatisPlusApplication.class, args);
+        SpringApplication.run(IntasectServiceApplication.class, args);
     }
 
 }

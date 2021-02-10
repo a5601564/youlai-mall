@@ -56,7 +56,7 @@ public class CodeGenerator {
 	/**
 	 * 项目根路径
 	 */
-	private static final String BASE_PATH = System.getProperty("user.dir") + "\\intasect-service\\src\\main\\java\\";
+	private static final String BASE_PATH = System.getProperty("user.dir") + "\\springboot-mybatis-plus\\src\\main\\java\\";
 
 	public static void main(String[] args) {
 		//注意，表名有些是区分大小写的
