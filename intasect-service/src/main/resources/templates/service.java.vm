@@ -1,0 +1,17 @@
+package com.intasect.service.$!{cfg.abc}.service;
+
+import com.intasect.service.common.service.CommonService;
+import com.intasect.service.$!{cfg.abc}.entity.${entity};
+import com.intasect.service.$!{cfg.abc}.entity.${entity}Vo;
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceName}  extends CommonService<${entity}Vo,${entity}> {
+
+}

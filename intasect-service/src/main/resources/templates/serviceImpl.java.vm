@@ -1,0 +1,23 @@
+package com.intasect.service.$!{cfg.abc}.service;
+
+import com.intasect.service.common.service.CommonServiceImpl;
+import com.intasect.service.$!{cfg.abc}.entity.${entity};
+import com.intasect.service.$!{cfg.abc}.entity.${entity}Vo;
+import com.intasect.service.$!{cfg.abc}.mapper.${entity}Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * $!{table.comment} 服务实现类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName}  extends CommonServiceImpl<${entity}Vo,${entity}>  implements ${table.serviceName} {
+
+    @Autowired
+    private ${entity}Mapper $!{cfg.abc}Mapper;
+}
