@@ -1,11 +1,13 @@
 package com.intasect.service.common.controller;
 
 import com.intasect.service.common.entity.PageInfo;
-import com.intasect.service.common.entity.Result;
+import com.youlai.common.result.Result;
 import com.intasect.service.common.service.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -43,13 +45,20 @@ public class CommonController<V, T> {
     }
 
     //方便测试暂时改成GetMapping
-    @GetMapping("save")
-//    @PostMapping("save")
-    public Result<V> save(V entityVo) {
+//    @GetMapping("save")
+    @PostMapping("save")
+    public Result<V> save(@RequestBody V entityVo) {
         return commonService.save(entityVo);
     }
 
-    @GetMapping("delete/{id}")
+    //方便测试暂时改成GetMapping
+//    @GetMapping("update")
+    @PostMapping("update")
+    public Result<V> update(@RequestBody V entityVo) {
+        return commonService.save(entityVo);
+    }
+
+    @PostMapping("delete/{id}")
     public Result<String> delete( @PathVariable("id") String id) {
         return commonService.delete(id);
     }

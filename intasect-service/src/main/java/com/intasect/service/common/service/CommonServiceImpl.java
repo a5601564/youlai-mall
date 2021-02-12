@@ -2,13 +2,13 @@ package com.intasect.service.common.service;
 
 import com.intasect.service.common.entity.PageCondition;
 import com.intasect.service.common.entity.PageInfo;
-import com.intasect.service.common.entity.Result;
 import com.intasect.service.common.mapper.CommonMapper;
 import com.intasect.service.util.CopyUtil;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.youlai.common.result.Result;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -71,7 +71,7 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
         PageInfo<V> pageInfo = PageInfo.of(page, entityVoClass);
         pageInfo.setSidx(pageCondition.getSidx());
         pageInfo.setSord(pageCondition.getSord());
-        return Result.build(pageInfo);
+        return Result.success(pageInfo);
     }
 
     @Override
@@ -79,12 +79,13 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
         T entity = CopyUtil.copy(entityVo, entityClass);
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.setEntity(entity);
-        return Result.build(CopyUtil.copyList(commonMapper.selectList(queryWrapper),entityVoClass));
+        List<V> vs = CopyUtil.copyList(commonMapper.selectList(queryWrapper), entityVoClass);
+        return Result.success(vs);
     }
 
     @Override
     public Result<V> get(String id) {
-        return Result.build(CopyUtil.copy(commonMapper.selectById(id),entityVoClass));
+        return Result.success(CopyUtil.copy(commonMapper.selectById(id),entityVoClass));
     }
 
     @Override
@@ -140,12 +141,12 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
             commonMapper.updateById(entityFull);
         }
 
-        return Result.build(CopyUtil.copy(entityFull,entityVoClass));
+        return Result.success(CopyUtil.copy(entityFull,entityVoClass));
     }
 
     @Override
     public Result<String> delete(String id) {
         //1删除成功、0失败
-        return Result.build(String.valueOf(commonMapper.deleteById(id)));
+        return Result.success(String.valueOf(commonMapper.deleteById(id)));
     }
 }

@@ -1,7 +1,7 @@
 package com.intasect.service.common.service;
 
 import com.intasect.service.common.entity.PageInfo;
-import com.intasect.service.common.entity.Result;
+import com.youlai.common.result.Result;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ public interface CommonService<V,T> {
 
     /**
      * list接口，条件查询
+     * @return
      */
     Result<List<V>> list(V entityVo);
 
