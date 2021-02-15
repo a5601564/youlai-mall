@@ -12,9 +12,14 @@ spring:
     database: 0
     host: localhost
     port: 6379
-    password: 5601564a
+    password:
 feign:
   httpclient:
     enabled: false
   okhttp:
     enabled: true
+
+
+weapp:
+  appid: wx99a151dc43d2637b
+  secret: a09605af8ad29ca5d18ff31c19828f37

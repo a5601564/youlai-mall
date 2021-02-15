@@ -28,12 +28,6 @@
 
         <dependency>
             <groupId>com.youlai</groupId>
-            <artifactId>ums-api</artifactId>
-            <version>${youlai.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.youlai</groupId>
             <artifactId>admin-api</artifactId>
             <version>${youlai.version}</version>
         </dependency>
