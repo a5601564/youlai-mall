@@ -6,8 +6,6 @@ import com.youlai.auth.domain.User;
 import com.youlai.common.constant.AuthConstants;
 import com.youlai.common.result.Result;
 import com.youlai.common.result.ResultCode;
-import com.youlai.mall.ums.pojo.dto.AuthMemberDTO;
-import com.youlai.mall.ums.api.MemberFeignService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -27,7 +25,6 @@ import javax.servlet.http.HttpServletRequest;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserFeignService userFeignService;
-    private MemberFeignService memberFeignService;
 
     private HttpServletRequest request;
 
@@ -45,15 +42,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 UserDTO userDTO = userRes.getData();
                 userDTO.setClientId(clientId);
                 user = new User(userDTO);
-                break;
-            case AuthConstants.WEAPP_CLIENT_ID: // 小程序会员
-                Result<AuthMemberDTO> memberRes = memberFeignService.getUserByOpenid(username);
-                if (ResultCode.USER_NOT_EXIST.getCode().equals(memberRes.getCode())) {
-                    throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
-                }
-                AuthMemberDTO authMemberDTO = memberRes.getData();
-                authMemberDTO.setClientId(clientId);
-                user = new User(authMemberDTO);
                 break;
         }
         if (!user.isEnabled()) {

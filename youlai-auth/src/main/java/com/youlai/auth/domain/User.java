@@ -3,7 +3,6 @@ package com.youlai.auth.domain;
 import cn.hutool.core.collection.CollectionUtil;
 import com.youlai.admin.pojo.dto.UserDTO;
 import com.youlai.common.constant.AuthConstants;
-import com.youlai.mall.ums.pojo.dto.AuthMemberDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,15 +43,6 @@ public class User implements UserDetails {
             user.getRoles().forEach(roleId -> authorities.add(new SimpleGrantedAuthority(String.valueOf(roleId))));
         }
     }
-
-    public User(AuthMemberDTO member){
-        this.setId(member.getId());
-        this.setUsername(member.getUsername());
-        this.setPassword(AuthConstants.BCRYPT + member.getPassword());
-        this.setEnabled( Integer.valueOf(1).equals(member.getStatus()));
-        this.setClientId(member.getClientId());
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
