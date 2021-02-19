@@ -101,7 +101,6 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
     public Result<V> save(V entityVo) {
         //传进来的对象（属性可能残缺）
         T entity = CopyUtil.copy(entityVo, entityClass);
-        Object attribute = RequestContextHolder.getRequestAttributes().getAttribute(AuthConstants.JWT_TOKEN_HEADER, RequestAttributes.SCOPE_REQUEST);
         JSONObject user = UserUtil.getUser(RequestContextHolder.getRequestAttributes());
         //最终要保存的对象
         T entityFull = entity;
@@ -150,8 +149,8 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
             ReflectUtil.setFieldValue(entityFull,"gmtCreateUser",user.get("user_name"));
             int newId = commonMapper.insert(entityFull);
         }else{
-            ReflectUtil.setFieldValue(entityFull,"gmtCreate",now);
-            ReflectUtil.setFieldValue(entityFull,"gmtCreateUser",user.get("user_name"));
+            ReflectUtil.setFieldValue(entityFull,"gmtModified",now);
+            ReflectUtil.setFieldValue(entityFull,"gmtModifiedUser",user.get("user_name"));
             commonMapper.updateById(entityFull);
         }
 

@@ -1,0 +1,30 @@
+spring:
+  datasource: #数据库相关
+    url: jdbc:mysql://localhost:3306/youlai?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    username: root
+    password: 5601564a
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
+    time-zone: GMT+8
+
+  application:
+    name: intasect-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
+
+mybatis-plus:
+  configuration:
+    # 驼峰下划线转换
+    map-underscore-to-camel-case: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

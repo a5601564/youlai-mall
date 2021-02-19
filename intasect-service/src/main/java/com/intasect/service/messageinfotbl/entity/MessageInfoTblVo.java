@@ -22,7 +22,6 @@ public class MessageInfoTblVo extends PageCondition {
     private String title;
     private String content;
     private Integer contentType;
-    private Integer sort;
     private Integer importance;
     private Integer disableFlag;
     private Date gmtCreate;

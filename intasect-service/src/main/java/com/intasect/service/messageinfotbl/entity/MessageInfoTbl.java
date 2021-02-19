@@ -41,11 +41,6 @@ public class MessageInfoTbl {
     private Integer contentType;
 
     /**
-     * 优先度
-     */
-    private Integer sort;
-
-    /**
      * 重要程度
      */
     private Integer importance;
