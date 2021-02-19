@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author huanzi-qch
- * @since 2021-02-10
+ * @since 2021-02-19
  */
 @Mapper
 public interface MessageInfoTblMapper extends CommonMapper<MessageInfoTbl> {

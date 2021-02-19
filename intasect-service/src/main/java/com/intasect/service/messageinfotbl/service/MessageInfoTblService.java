@@ -10,7 +10,7 @@ import com.intasect.service.messageinfotbl.entity.MessageInfoTblVo;
  * </p>
  *
  * @author huanzi-qch
- * @since 2021-02-10
+ * @since 2021-02-19
  */
 public interface MessageInfoTblService  extends CommonService<MessageInfoTblVo,MessageInfoTbl> {
 

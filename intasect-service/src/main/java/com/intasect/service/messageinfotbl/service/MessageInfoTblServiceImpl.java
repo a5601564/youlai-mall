@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author huanzi-qch
- * @since 2021-02-10
+ * @since 2021-02-19
  */
 @Service
 public class MessageInfoTblServiceImpl  extends CommonServiceImpl<MessageInfoTblVo,MessageInfoTbl>  implements MessageInfoTblService {

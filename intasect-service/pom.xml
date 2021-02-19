@@ -22,6 +22,11 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.youlai</groupId>
+            <artifactId>youlai-common</artifactId>
+            <version>${youlai.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.youlai</groupId>

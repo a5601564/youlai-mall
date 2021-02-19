@@ -1,5 +1,8 @@
 package com.intasect.service.common.service;
 
+import cn.hutool.core.date.LocalDateTimeUtil;
+import cn.hutool.core.util.ReflectUtil;
+import cn.hutool.json.JSONObject;
 import com.intasect.service.common.entity.PageCondition;
 import com.intasect.service.common.entity.PageInfo;
 import com.intasect.service.common.mapper.CommonMapper;
@@ -8,15 +11,21 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.youlai.common.constant.AuthConstants;
 import com.youlai.common.result.Result;
+import com.youlai.common.utils.UserUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,7 +101,8 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
     public Result<V> save(V entityVo) {
         //传进来的对象（属性可能残缺）
         T entity = CopyUtil.copy(entityVo, entityClass);
-
+        Object attribute = RequestContextHolder.getRequestAttributes().getAttribute(AuthConstants.JWT_TOKEN_HEADER, RequestAttributes.SCOPE_REQUEST);
+        JSONObject user = UserUtil.getUser(RequestContextHolder.getRequestAttributes());
         //最终要保存的对象
         T entityFull = entity;
 
@@ -132,12 +142,16 @@ public class CommonServiceImpl<V,T> implements CommonService<V,T> {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
+        LocalDateTime now = LocalDateTimeUtil.now();
         //新增或更新
         if(StringUtils.isEmpty(id)){
             //1插入成功、0失败
+            ReflectUtil.setFieldValue(entityFull,"gmtCreate",now);
+            ReflectUtil.setFieldValue(entityFull,"gmtCreateUser",user.get("user_name"));
             int newId = commonMapper.insert(entityFull);
         }else{
+            ReflectUtil.setFieldValue(entityFull,"gmtCreate",now);
+            ReflectUtil.setFieldValue(entityFull,"gmtCreateUser",user.get("user_name"));
             commonMapper.updateById(entityFull);
         }
 

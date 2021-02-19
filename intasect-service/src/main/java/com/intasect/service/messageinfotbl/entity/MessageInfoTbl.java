@@ -13,7 +13,7 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author huanzi-qch
- * @since 2021-02-10
+ * @since 2021-02-19
  */
 @Data
 public class MessageInfoTbl {
@@ -39,6 +39,16 @@ public class MessageInfoTbl {
      * content_type
      */
     private Integer contentType;
+
+    /**
+     * 优先度
+     */
+    private Integer sort;
+
+    /**
+     * 重要程度
+     */
+    private Integer importance;
 
     /**
      * disable_flag
