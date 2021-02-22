@@ -30,6 +30,12 @@
 
         <dependency>
             <groupId>com.youlai</groupId>
+            <artifactId>admin-biz</artifactId>
+            <version>${youlai.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.youlai</groupId>
             <artifactId>common-redis</artifactId>
             <version>${youlai.version}</version>
         </dependency>
@@ -84,6 +90,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!--邮件: email-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
     </dependencies>
 

@@ -2,6 +2,7 @@ package com.youlai.admin.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -77,6 +78,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         boolean result = this.updateById(user);
         return result;
     }
+
+    @Override
+    public SysUser getUserByEmail(String email) {
+        QueryWrapper<SysUser> queryWrapper = new QueryWrapper<SysUser>();
+        queryWrapper.eq("email",email);
+        SysUser sysUser = this.baseMapper.selectOne(queryWrapper);
+
+        return sysUser;
+    }
+
 
 
 }

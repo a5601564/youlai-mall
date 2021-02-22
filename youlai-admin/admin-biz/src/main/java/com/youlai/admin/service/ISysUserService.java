@@ -14,4 +14,5 @@ public interface ISysUserService extends IService<SysUser> {
 
     boolean updateUser(SysUser user);
 
+    SysUser getUserByEmail(String email);
 }

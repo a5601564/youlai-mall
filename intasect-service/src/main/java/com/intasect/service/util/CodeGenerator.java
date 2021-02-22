@@ -60,7 +60,7 @@ public class CodeGenerator {
 
 	public static void main(String[] args) {
 		//注意，表名有些是区分大小写的
-		String[] tables = {"message_info_tbl","message_user_tbl"};
+		String[] tables = {"message_info_tbl","sys_user"};
 		for (String table : tables) {
 			generateByTables(table);
 		}

@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestAttributes;
  */
 public class UserUtil {
 
+    public final static String UserId = "user_id";
 	/** 
      * get user
      * @param requestAttributes
@@ -24,21 +25,38 @@ public class UserUtil {
         Request request = null;
         JSONObject jsonObject = null;
         try {
-
-            Object temp = ReflectUtil.getFieldValue(requestAttributes, "request");
-            temp = ReflectUtil.getFieldValue(temp, "request");
-            request = (Request) temp;
+            request = getRequest(requestAttributes);
 
             String token = request.getHeader(AuthConstants.JWT_TOKEN_HEADER);
             token = token.replace(AuthConstants.JWT_TOKEN_PREFIX, Strings.EMPTY);
             JWSObject jwsObject = JWSObject.parse(token);
             String payload = jwsObject.getPayload().toString();
             jsonObject = JSONUtil.parseObj(payload);
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
         return jsonObject;
+    }
+
+    /**
+     * get request
+     * @param requestAttributes
+     * @return
+     */
+    public static Request getRequest(RequestAttributes requestAttributes){
+        Request request = null;
+        try {
+            Object temp = ReflectUtil.getFieldValue(requestAttributes, "request");
+            temp = ReflectUtil.getFieldValue(temp, "request");
+            request = (Request) temp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return request;
     }
 }
