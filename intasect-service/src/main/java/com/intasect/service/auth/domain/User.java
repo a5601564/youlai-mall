@@ -1,7 +1,7 @@
 package com.intasect.service.auth.domain;
 
 import cn.hutool.core.collection.CollectionUtil;
-import com.youlai.admin.pojo.dto.UserDTO;
+import com.intasect.service.admin.pojo.dto.UserDTO;
 import com.youlai.common.constant.AuthConstants;
 import lombok.Data;
 import lombok.NoArgsConstructor;

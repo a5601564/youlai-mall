@@ -1,7 +1,7 @@
 package com.intasect.service.auth.service;
 
-import com.youlai.admin.api.UserFeignService;
-import com.youlai.admin.pojo.dto.UserDTO;
+import com.intasect.service.api.UserFeignService;
+import com.intasect.service.admin.pojo.dto.UserDTO;
 import com.intasect.service.auth.domain.User;
 import com.youlai.common.constant.AuthConstants;
 import com.youlai.common.result.Result;
@@ -25,6 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+    private UserFeignService userFeignService;
+
     private HttpServletRequest request;
 
     @Override
@@ -34,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = null;
         switch (clientId) {
             case AuthConstants.ADMIN_CLIENT_ID: // 后台用户
-                Result<UserDTO> userRes = null;
+                Result<UserDTO> userRes = userFeignService.getUserByUsername(username);
                 if (ResultCode.USER_NOT_EXIST.getCode().equals(userRes.getCode())) {
                     throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
                 }
