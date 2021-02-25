@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 import java.security.Principal;
 import java.util.Map;
@@ -42,8 +41,8 @@ public class AuthController {
     })
     @PostMapping("/token")
     public Result postAccessToken(
-            @ApiIgnore Principal principal,
-            @ApiIgnore @RequestParam Map<String, String> parameters
+            Principal principal,
+            @RequestParam Map<String, String> parameters
     ) throws HttpRequestMethodNotSupportedException {
         String clientId = parameters.get(AuthConstants.JWT_CLIENT_ID_KEY);
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();

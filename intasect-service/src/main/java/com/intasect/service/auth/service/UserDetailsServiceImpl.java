@@ -1,10 +1,16 @@
 package com.intasect.service.auth.service;
 
-import com.intasect.service.api.UserFeignService;
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollectionUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.intasect.service.admin.pojo.dto.UserDTO;
+import com.intasect.service.admin.pojo.entity.SysUser;
+import com.intasect.service.admin.pojo.entity.SysUserRole;
+import com.intasect.service.admin.service.ISysRoleService;
+import com.intasect.service.admin.service.ISysUserRoleService;
+import com.intasect.service.admin.service.ISysUserService;
 import com.intasect.service.auth.domain.User;
 import com.youlai.common.constant.AuthConstants;
-import com.youlai.common.result.Result;
 import com.youlai.common.result.ResultCode;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -14,8 +20,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -25,9 +34,10 @@ import javax.servlet.http.HttpServletRequest;
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserFeignService userFeignService;
-
     private HttpServletRequest request;
+    private ISysUserService iSysUserService;
+    private ISysUserRoleService iSysUserRoleService;
+    private ISysRoleService iSysRoleService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -36,11 +46,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = null;
         switch (clientId) {
             case AuthConstants.ADMIN_CLIENT_ID: // 后台用户
-                Result<UserDTO> userRes = userFeignService.getUserByUsername(username);
-                if (ResultCode.USER_NOT_EXIST.getCode().equals(userRes.getCode())) {
+                UserDTO userRes = this.getUserByUsername(username);
+                if (userRes == null) {
                     throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
                 }
-                UserDTO userDTO = userRes.getData();
+                UserDTO userDTO = userRes;
                 userDTO.setClientId(clientId);
                 user = new User(userDTO);
                 break;
@@ -54,5 +64,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         return user;
     }
+
+    public UserDTO getUserByUsername(
+            @PathVariable String username
+    ) {
+        SysUser user = iSysUserService.getOne(new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getUsername, username));
+
+        if (user == null) {
+            return null;
+        }
+        UserDTO userDTO = new UserDTO();
+        BeanUtil.copyProperties(user, userDTO);
+        List<Long> roleIds = iSysUserRoleService.list(new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, user.getId())
+        ).stream().map(item -> item.getRoleId()).collect(Collectors.toList());
+        if (CollectionUtil.isNotEmpty(roleIds)) {
+            List<Long> roles = iSysRoleService.listByIds(roleIds).stream()
+                    .map(role -> role.getId()).collect(Collectors.toList());
+            userDTO.setRoles(roles);
+        }
+        return userDTO;
+    }
+
 
 }
