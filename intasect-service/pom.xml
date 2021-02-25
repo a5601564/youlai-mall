@@ -40,12 +40,13 @@
             <version>${youlai.version}</version>
         </dependency>
 
-        <!--添加MyBatis-Plus依赖 -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.0</version>
+            <groupId>com.youlai</groupId>
+            <artifactId>common-mybatis</artifactId>
+            <version>${youlai.version}</version>
         </dependency>
+
+        <!--添加MyBatis-Plus依赖 -->
 
         <!--添加代码生成器依赖 -->
         <dependency>

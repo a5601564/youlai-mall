@@ -1,26 +1,33 @@
 spring:
-    datasource: #数据库相关
-      url: jdbc:mysql://localhost:3306/youlai?serverTimezone=GMT%2B8&characterEncoding=utf-8
-      username: root
-      password: 5601564a
-      driver-class-name: com.mysql.cj.jdbc.Driver
-    mvc:
-      date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/youlai?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true
+    username: root
+    password: 5601564a
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 5601564a
 
-    jackson:
-      date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
-      time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
 
-    application:
-      name: intasect-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
+    time-zone: GMT+8
 
-    cloud:
-      nacos:
-        discovery:
-          server-addr: http://localhost:8848
-        config:
-          server-addr: ${spring.cloud.nacos.discovery.server-addr}
-          file-extension: yaml
+  application:
+    name: intasect-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+      config:
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        file-extension: yaml
 
 mybatis-plus:
   configuration:
