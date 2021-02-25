@@ -25,7 +25,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     @Results({
             @Result(id = true, column = "id", property = "id"),
             // 一对多关联查询拥有菜单访问权限的角色ID集合
-            @Result(property = "roles", column = "id", many = @Many(select = "com.youlai.admin.mapper.SysRoleMenuMapper.listByMenuId"))
+            @Result(property = "roles", column = "id", many = @Many(select = "com.intasect.service.admin.mapper.SysRoleMenuMapper.listByMenuId"))
     })
     List<SysMenu> listForRouter();
 }

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@MapperScan({"com.intasect.service.*.mapper","com.intasect.service.admin.mapper"})
+@MapperScan("com.intasect.service.*.mapper")
 public class IntasectServiceApplication {
 
     public static void main(String[] args) {
