@@ -21,13 +21,11 @@ spring:
   application:
     name: intasect-service
 
-  cloud:
-    nacos:
-      discovery:
-        server-addr: http://localhost:8848
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        file-extension: yaml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9995/getPublicKey #配置RSA的公钥访问地址
 
 mybatis-plus:
   configuration:
@@ -40,3 +38,11 @@ minio:
   endpoint: http://101.37.69.49:9000/
   access-key: minioadmin
   secret-key: minioadmin
+
+# 是否演示环境
+demo: false
+
+# 配置白名单路径(无需登录)
+whitelist:
+  urls:
+    - "/oauth/token"
