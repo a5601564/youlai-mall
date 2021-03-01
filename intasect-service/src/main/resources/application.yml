@@ -1,26 +1,31 @@
 spring:
-    datasource: #数据库相关
-      url: jdbc:mysql://localhost:3306/youlai?serverTimezone=GMT%2B8&characterEncoding=utf-8
-      username: root
-      password: 5601564a
-      driver-class-name: com.mysql.cj.jdbc.Driver
-    mvc:
-      date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/youlai?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&autoReconnect=true
+    username: root
+    password: 5601564a
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+    password: 5601564a
 
-    jackson:
-      date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
-      time-zone: GMT+8
+  mvc:
+    date-format: yyyy-MM-dd HH:mm:ss #mvc接收参数时对日期进行格式化
 
-    application:
-      name: intasect-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss #jackson对响应回去的日期参数进行格式化
+    time-zone: GMT+8
 
-    cloud:
-      nacos:
-        discovery:
-          server-addr: http://localhost:8848
-        config:
-          server-addr: ${spring.cloud.nacos.discovery.server-addr}
-          file-extension: yaml
+  application:
+    name: intasect-service
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9995/getPublicKey #配置RSA的公钥访问地址
 
 mybatis-plus:
   configuration:
@@ -28,3 +33,16 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+minio:
+  endpoint: http://101.37.69.49:9000/
+  access-key: minioadmin
+  secret-key: minioadmin
+
+# 是否演示环境
+demo: false
+
+# 配置白名单路径(无需登录)
+whitelist:
+  urls:
+    - "/oauth/token"

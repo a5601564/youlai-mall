@@ -11,10 +11,6 @@
 
     <modules>
         <module>youlai-common</module>
-        <module>youlai-admin</module>
-        <module>youlai-auth</module>
-        <module>youlai-gateway</module>
-        <module>youlai-registry</module>
         <module>intasect-service</module>
     </modules>
 

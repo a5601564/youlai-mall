@@ -2,14 +2,17 @@ package com.youlai.common.web.util;
 
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.nimbusds.jose.JWSObject;
 import com.youlai.common.constant.AuthConstants;
 import com.youlai.common.result.ResultCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +26,17 @@ public class WebUtils extends org.springframework.web.util.WebUtils {
     }
 
     public static JSONObject getJwtPayload() {
-        String jwtPayload = getHttpServletRequest().getHeader(AuthConstants.JWT_PAYLOAD_KEY);
-        JSONObject jsonObject = JSONUtil.parseObj(jwtPayload);
+        JSONObject jsonObject = null;
+        try {
+            String token = getHttpServletRequest().getHeader(AuthConstants.JWT_TOKEN_HEADER);
+            token = token.replace(AuthConstants.JWT_TOKEN_PREFIX, Strings.EMPTY);
+            JWSObject jwsObject = JWSObject.parse(token);
+            String payload = jwsObject.getPayload().toString();
+            jsonObject = JSONUtil.parseObj(payload);
+        }catch (Exception e){
+            return jsonObject;
+        }
+
         return jsonObject;
     }
 
